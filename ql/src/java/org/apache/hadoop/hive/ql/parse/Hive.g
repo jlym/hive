@@ -363,9 +363,9 @@ createIndexStatement
         indexComment?)
     ;
 
-+indexComment
-+@init { msgs.push("comment on an index");}
-+@after {msgs.pop();}
+indexComment
+@init { msgs.push("comment on an index");}
+@after {msgs.pop();}
         :
                 KW_COMMENT comment=StringLiteral  -> ^(TOK_INDEXCOMMENT $comment)
         ;

@@ -895,6 +895,15 @@ public class DDLSemanticAnalyzer extends BaseSemanticAnalyzer {
     setFetchTask(createFetchTask(showTblStatusDesc.getSchema()));
   }
 
+  private void analyzeShowIndexes(ASTNode ast) throws SemanticException {
+    ShowIndexesDesc showIndexesDesc;
+    String tableName = unescapeIdentifier(ast.getChild(0).getText());
+    showIndexesDesc = new ShowIndexesDesc(tableName, ctx.getResFile());
+    rootTasks.add(TaskFactory.get(new DDLWork(getInputs(), getOutputs(),
+        showIndexesDesc), conf));
+    setFetchTask(createFetchTask(showIndexesDesc.getSchema()));
+  }
+
   /**
    * Add the task according to the parsed command tree. This is used for the CLI
    * command "SHOW FUNCTIONS;".
