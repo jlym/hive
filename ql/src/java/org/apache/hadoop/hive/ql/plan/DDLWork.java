@@ -31,6 +31,7 @@ import org.apache.hadoop.hive.ql.hooks.WriteEntity;
 public class DDLWork implements Serializable {
   private static final long serialVersionUID = 1L;
   private CreateIndexDesc createIndexDesc;
+  private AlterIndexDesc alterIndexDesc;
   private DropIndexDesc dropIdxDesc;
   private CreateDatabaseDesc createDatabaseDesc;
   private SwitchDatabaseDesc switchDatabaseDesc;
@@ -40,6 +41,7 @@ public class DDLWork implements Serializable {
   private CreateViewDesc createVwDesc;
   private DropTableDesc dropTblDesc;
   private AlterTableDesc alterTblDesc;
+  private AlterIndexDesc alterIdxDesc;
   private ShowDatabasesDesc showDatabasesDesc;
   private ShowTablesDesc showTblsDesc;
   private LockTableDesc lockTblDesc;
@@ -73,6 +75,10 @@ public class DDLWork implements Serializable {
 
   public DDLWork(CreateIndexDesc createIndex) {
     this.createIndexDesc = createIndex;
+  }
+
+  public DDLWork(AlterIndexDesc alterIndex) {
+    this.alterIndexDesc = alterIndex;
   }
   
   /**
@@ -113,6 +119,16 @@ public class DDLWork implements Serializable {
       AlterTableDesc alterTblDesc) {
     this(inputs, outputs);
     this.alterTblDesc = alterTblDesc;
+  }
+
+  /**
+   * @param alterIdxDesc
+   *          alter index descriptor
+   */
+  public DDLWork(HashSet<ReadEntity> inputs, HashSet<WriteEntity> outputs,
+      AlterIndexDesc alterIdxDesc) {
+    this(inputs, outputs);
+    this.alterIdxDesc = alterIdxDesc;
   }
 
   /**
@@ -356,12 +372,34 @@ public class DDLWork implements Serializable {
     this.createTblDesc = createTblDesc;
   }
   
+  /**
+   * @return the createIndexDesc
+   */
   public CreateIndexDesc getCreateIndexDesc() {
     return createIndexDesc;
   }
 
+  /**
+   * @param createIndexDesc
+   *          the createIndexDesc to set
+   */
   public void setCreateIndexDesc(CreateIndexDesc createIndexDesc) {
     this.createIndexDesc = createIndexDesc;
+  }
+
+  /**
+   * @return the alterIndexDesc
+   */
+  public AlterIndexDesc getAlterIndexDesc() {
+    return alterIndexDesc;
+  }
+
+  /**
+   * @param alterTblDesc
+   *          the alterTblDesc to set
+   */
+  public void setAlterIndexDesc(AlterIndexDesc alterIndexDesc) {
+    this.alterIndexDesc = alterIndexDesc;
   }
 
   /**

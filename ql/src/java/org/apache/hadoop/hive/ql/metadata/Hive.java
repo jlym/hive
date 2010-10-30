@@ -345,6 +345,28 @@ public class Hive {
   }
 
   /**
+   * Updates the existing index metadata with the new metadata.
+   *
+   * @param idxName
+   *          name of the existing index
+   * @param newIdx
+   *          new name of the index. could be the old name
+   * @throws InvalidOperationException
+   *           if the changes in metadata is not acceptable
+   * @throws TException
+   */
+  public void alterIndex(String baseTblName, String idxName, Index newIdx)
+      throws InvalidOperationException, HiveException {
+    try {
+      getMSC().alter_index(getCurrentDatabase(), baseTblName, idxName, newIdx);
+    } catch (MetaException e) {
+      throw new HiveException("Unable to alter index.", e);
+    } catch (TException e) {
+      throw new HiveException("Unable to alter index.", e);
+    }
+  }
+
+  /**
    * Updates the existing table metadata with the new metadata.
    *
    * @param tblName
@@ -583,6 +605,10 @@ public class Hive {
     } catch (Exception e) {
       throw new HiveException(e);
     }
+  }
+
+  public Index getIndex(String baseTableName, String indexName) throws HiveException {
+    return this.getIndex(getCurrentDatabase(), baseTableName, indexName);
   }
 
   public Index getIndex(String dbName, String baseTableName,
