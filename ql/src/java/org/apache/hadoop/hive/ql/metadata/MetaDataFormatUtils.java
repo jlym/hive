@@ -18,19 +18,23 @@
 
 package org.apache.hadoop.hive.ql.metadata;
 
-import org.apache.commons.lang.StringEscapeUtils;
-import org.apache.hadoop.hive.metastore.api.FieldSchema;
-import org.apache.hadoop.hive.metastore.api.StorageDescriptor;
-import org.apache.hadoop.hive.ql.plan.DescTableDesc;
-
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
-import java.util.Collections;
-import java.util.ArrayList;
+
+import org.apache.commons.lang.StringEscapeUtils;
+import org.apache.hadoop.hive.metastore.api.FieldSchema;
+import org.apache.hadoop.hive.metastore.api.Index;
+import org.apache.hadoop.hive.metastore.api.StorageDescriptor;
+import org.apache.hadoop.hive.ql.index.HiveIndex;
+import org.apache.hadoop.hive.ql.index.HiveIndex.IndexType;
+import org.apache.hadoop.hive.ql.plan.DescTableDesc;
+import org.apache.hadoop.hive.ql.plan.ShowIndexesDesc;
 
 /**
- * This class provides methods to format table information.
+ * This class provides methods to format table and index information.
  *
  */
 public final class MetaDataFormatUtils {
@@ -78,6 +82,32 @@ public final class MetaDataFormatUtils {
       formatFieldSchemas(tableInfo, col);
     }
   }
+
+
+  public static String getAllColumnsInformation(Index index) {
+    StringBuilder indexInfo = new StringBuilder(DEFAULT_STRINGBUILDER_SIZE);
+
+    String[] indexColumns = new String[6];
+
+    indexColumns[0] = index.getIndexName();
+    indexColumns[1] = index.getOrigTableName();
+
+    // add column name
+    indexColumns[2] = index.getSd().getCols().get(0).getName();
+
+    indexColumns[3] = index.getIndexTableName();
+
+    // index type
+    String indexHandlerClass = index.getIndexHandlerClass();
+    IndexType indexType = HiveIndex.getIndexTypeByClassName(indexHandlerClass);
+    indexColumns[4] = indexType.getName();
+
+    indexColumns[5] = index.getParameters().get("comment");
+
+    formatOutput(indexColumns, indexInfo);
+
+    return indexInfo.toString();
+}
 
   /*
     Displaying columns unformatted for backward compatibility.
@@ -210,6 +240,10 @@ public final class MetaDataFormatUtils {
 
   private static void formatOutput(String[] fields, StringBuilder tableInfo) {
     for (String field : fields) {
+      if (field == null) {
+        tableInfo.append(FIELD_DELIM);
+        continue;
+      }
       tableInfo.append(String.format("%-" + ALIGNMENT + "s", field)).append(FIELD_DELIM);
     }
     tableInfo.append(LINE_DELIM);
@@ -230,5 +264,11 @@ public final class MetaDataFormatUtils {
 
   public static String[] getColumnsHeader() {
     return DescTableDesc.getSchema().split("#")[0].split(",");
+  }
+
+  public static String getIndexColumnsHeader() {
+    StringBuilder indexCols = new StringBuilder(DEFAULT_STRINGBUILDER_SIZE);
+    formatOutput(ShowIndexesDesc.getSchema().split("#")[0].split(","), indexCols);
+    return indexCols.toString();
   }
 }

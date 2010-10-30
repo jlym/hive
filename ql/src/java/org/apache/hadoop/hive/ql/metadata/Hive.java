@@ -448,7 +448,7 @@ public class Hive {
       String storageHandler, String location,
       Map<String, String> idxProps, Map<String, String> tblProps, Map<String, String> serdeProps,
       String collItemDelim, String fieldDelim, String fieldEscape,
-      String lineDelim, String mapKeyDelim)
+      String lineDelim, String mapKeyDelim, String indexComment)
       throws HiveException {
 
     try {
@@ -571,6 +571,7 @@ public class Hive {
 
       Index indexDesc = new Index(indexName, indexHandlerClass, dbName, tableName, time, time, indexTblName,
           storageDescriptor, params, deferredRebuild);
+      indexDesc.getParameters().put("comment", indexComment);
       indexHandler.analyzeIndexDefinition(baseTbl, indexDesc, tt);
 
       if (idxProps != null)
@@ -1603,4 +1604,14 @@ public class Hive {
     }
   }
 
+  public List<Index> getIndexes(String dbName, String tblName, short max) throws HiveException {
+    List<Index> indexes = null;
+    try {
+      indexes = getMSC().listIndexes(dbName, tblName, max);
+    } catch (Exception e) {
+      LOG.error(StringUtils.stringifyException(e));
+      throw new HiveException(e);
+    }
+    return indexes;
+  }
 };
