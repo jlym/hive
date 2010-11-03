@@ -36,6 +36,10 @@ create table `_t`(`_i` int, `_j` int);
 create index x on table `_t`(`_j`) as 'compact' WITH DEFERRED REBUILD;
 alter index x on `_t` rebuild;
 
+create index x2 on table `_t`(`_i`,`_j`) as 'compact' WITH DEFERRED
+REBUILD;
+alter index x2 on `_t` rebuild;
+
 drop index src_index_2 on src;
 drop index src_index_3 on src;
 drop index src_index_4 on src;
