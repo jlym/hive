@@ -12,11 +12,11 @@ ALTER INDEX idx_1 ON show_idx_full REBUILD;
 ALTER INDEX idx_2 ON show_idx_full REBUILD;
 ALTER INDEX idx_3 ON show_idx_full REBUILD;
 
-EXPLAIN SHOW INDEXES FROM show_idx_full;
-SHOW INDEXES FROM show_idx_full;
+EXPLAIN SHOW INDEXES ON show_idx_full;
+SHOW INDEXES ON show_idx_full;
 
-EXPLAIN SHOW INDEXES FROM show_idx_empty;
-SHOW INDEXES FROM show_idx_empty;
+EXPLAIN SHOW INDEXES ON show_idx_empty;
+SHOW INDEXES ON show_idx_empty;
 
 DROP TABLE show_idx_empty;
 DROP TABLE show_idx_full;

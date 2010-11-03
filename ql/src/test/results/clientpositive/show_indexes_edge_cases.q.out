@@ -70,9 +70,9 @@ POSTHOOK: Lineage: default__show_idx_full_idx_2__.value1 SIMPLE [(show_idx_full)
 POSTHOOK: Lineage: default__show_idx_full_idx_3__._bucketname SIMPLE [(show_idx_full)show_idx_full.FieldSchema(name:INPUT__FILE__NAME, type:string, comment:), ]
 POSTHOOK: Lineage: default__show_idx_full_idx_3__._offsets EXPRESSION [(show_idx_full)show_idx_full.FieldSchema(name:BLOCK__OFFSET__INSIDE__FILE, type:bigint, comment:), ]
 POSTHOOK: Lineage: default__show_idx_full_idx_3__.value2 SIMPLE [(show_idx_full)show_idx_full.FieldSchema(name:value2, type:string, comment:null), ]
-PREHOOK: query: EXPLAIN SHOW INDEXES FROM show_idx_full
+PREHOOK: query: EXPLAIN SHOW INDEXES ON show_idx_full
 PREHOOK: type: SHOWINDEXES
-POSTHOOK: query: EXPLAIN SHOW INDEXES FROM show_idx_full
+POSTHOOK: query: EXPLAIN SHOW INDEXES ON show_idx_full
 POSTHOOK: type: SHOWINDEXES
 POSTHOOK: Lineage: default__show_idx_full_idx_1__._bucketname SIMPLE [(show_idx_full)show_idx_full.FieldSchema(name:INPUT__FILE__NAME, type:string, comment:), ]
 POSTHOOK: Lineage: default__show_idx_full_idx_1__._offsets EXPRESSION [(show_idx_full)show_idx_full.FieldSchema(name:BLOCK__OFFSET__INSIDE__FILE, type:bigint, comment:), ]
@@ -100,9 +100,9 @@ STAGE PLANS:
       limit: -1
 
 
-PREHOOK: query: SHOW INDEXES FROM show_idx_full
+PREHOOK: query: SHOW INDEXES ON show_idx_full
 PREHOOK: type: SHOWINDEXES
-POSTHOOK: query: SHOW INDEXES FROM show_idx_full
+POSTHOOK: query: SHOW INDEXES ON show_idx_full
 POSTHOOK: type: SHOWINDEXES
 POSTHOOK: Lineage: default__show_idx_full_idx_1__._bucketname SIMPLE [(show_idx_full)show_idx_full.FieldSchema(name:INPUT__FILE__NAME, type:string, comment:), ]
 POSTHOOK: Lineage: default__show_idx_full_idx_1__._offsets EXPRESSION [(show_idx_full)show_idx_full.FieldSchema(name:BLOCK__OFFSET__INSIDE__FILE, type:bigint, comment:), ]
@@ -119,9 +119,9 @@ idx_name            	tab_name            	col_name            	idx_tab_name     
 idx_1               	show_idx_full       	key                 	default__show_idx_full_idx_1__	compact             	
 idx_2               	show_idx_full       	value1              	default__show_idx_full_idx_2__	compact             	
 idx_3               	show_idx_full       	value2              	default__show_idx_full_idx_3__	compact             	
-PREHOOK: query: EXPLAIN SHOW INDEXES FROM show_idx_empty
+PREHOOK: query: EXPLAIN SHOW INDEXES ON show_idx_empty
 PREHOOK: type: SHOWINDEXES
-POSTHOOK: query: EXPLAIN SHOW INDEXES FROM show_idx_empty
+POSTHOOK: query: EXPLAIN SHOW INDEXES ON show_idx_empty
 POSTHOOK: type: SHOWINDEXES
 POSTHOOK: Lineage: default__show_idx_full_idx_1__._bucketname SIMPLE [(show_idx_full)show_idx_full.FieldSchema(name:INPUT__FILE__NAME, type:string, comment:), ]
 POSTHOOK: Lineage: default__show_idx_full_idx_1__._offsets EXPRESSION [(show_idx_full)show_idx_full.FieldSchema(name:BLOCK__OFFSET__INSIDE__FILE, type:bigint, comment:), ]
@@ -149,9 +149,9 @@ STAGE PLANS:
       limit: -1
 
 
-PREHOOK: query: SHOW INDEXES FROM show_idx_empty
+PREHOOK: query: SHOW INDEXES ON show_idx_empty
 PREHOOK: type: SHOWINDEXES
-POSTHOOK: query: SHOW INDEXES FROM show_idx_empty
+POSTHOOK: query: SHOW INDEXES ON show_idx_empty
 POSTHOOK: type: SHOWINDEXES
 POSTHOOK: Lineage: default__show_idx_full_idx_1__._bucketname SIMPLE [(show_idx_full)show_idx_full.FieldSchema(name:INPUT__FILE__NAME, type:string, comment:), ]
 POSTHOOK: Lineage: default__show_idx_full_idx_1__._offsets EXPRESSION [(show_idx_full)show_idx_full.FieldSchema(name:BLOCK__OFFSET__INSIDE__FILE, type:bigint, comment:), ]
