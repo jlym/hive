@@ -1414,6 +1414,13 @@ public class HiveMetaStore extends ThriftHiveMetastore {
       throw new MetaException("Not yet implemented");
     }
 
+    public void alter_index(final String dbname, final String base_table_name, final String index_name, final Index newIndex)
+        throws InvalidOperationException, MetaException {
+      incrementCounter("alter_index");
+      // TODO Auto-generated method stub
+      throw new MetaException("Not yet implemented");
+    }
+
     public String getVersion() throws TException {
       incrementCounter("getVersion");
       logStartFunction("getVersion");
