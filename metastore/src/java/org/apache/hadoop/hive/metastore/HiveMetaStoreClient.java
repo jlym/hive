@@ -712,7 +712,7 @@ public class HiveMetaStoreClient implements IMetaStoreClient {
   public Index getIndex(String dbName, String tblName, String indexName)
       throws MetaException, UnknownTableException, NoSuchObjectException,
       TException {
-    return client.get_index_by_name(dbName, tblName, indexName);
+    return deepCopy(client.get_index_by_name(dbName, tblName, indexName));
   }
 
   /**
@@ -823,6 +823,14 @@ public class HiveMetaStoreClient implements IMetaStoreClient {
     Table copy = null;
     if (table != null) {
       copy = new Table(table);
+    }
+    return copy;
+  }
+
+  private Index deepCopy(Index index) {
+    Index copy = null;
+    if (index != null) {
+      copy = new Index(index);
     }
     return copy;
   }

@@ -356,12 +356,15 @@ public class DDLTask extends Task<DDLWork> implements Serializable {
         .currentTimeMillis() / 1000));
 
     try {
+      System.out.println("Trying to alter index");
       db.alterIndex(alterIndex.getBaseTableName(), alterIndex.getIndexName(), idx);
     } catch (InvalidOperationException e) {
       console.printError("Invalid alter operation: " + e.getMessage());
       LOG.info("alter index: " + stringifyException(e));
       return 1;
     } catch (HiveException e) {
+      console.printError("Invalid alter operation: " + e.getMessage());
+      System.out.println("alter index: " + stringifyException(e));
       return 1;
     }
     return 0;

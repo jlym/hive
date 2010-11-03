@@ -1406,8 +1406,28 @@ public class HiveMetaStore extends ThriftHiveMetastore {
     public void alter_index(final String dbname, final String base_table_name, final String index_name, final Index newIndex)
         throws InvalidOperationException, MetaException {
       incrementCounter("alter_index");
-      // TODO Auto-generated method stub
-      throw new MetaException("Not yet implemented");
+      logStartFunction("alter_index: db=" + dbname + " base_tbl=" + base_table_name
+          + " idx=" + index_name + " newidx=" + newIndex.getIndexName());
+      newIndex.putToParameters(Constants.DDL_TIME, Long.toString(System
+          .currentTimeMillis() / 1000));
+
+      try {
+        executeWithRetry(new Command<Boolean>() {
+          @Override
+          Boolean run(RawStore ms) throws Exception {
+            ms.alterIndex(dbname, base_table_name, index_name, newIndex);
+            return Boolean.TRUE;
+          }
+        });
+      } catch (MetaException e) {
+        throw e;
+      } catch (InvalidOperationException e) {
+        throw e;
+      } catch (Exception e) {
+        assert(e instanceof RuntimeException);
+        throw (RuntimeException)e;
+      }
+      return;
     }
 
     public String getVersion() throws TException {
