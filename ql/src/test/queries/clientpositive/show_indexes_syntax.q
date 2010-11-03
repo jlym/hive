@@ -1,4 +1,3 @@
-DROP INDEX idx_t1 ON shidx_t1;
 DROP TABLE shidx_t1;
 
 CREATE TABLE shidx_t1(KEY STRING, VALUE STRING);
@@ -26,5 +25,4 @@ SHOW INDEXES FROM shidx_t1;
 
 SHOW INDEXES FROM shidx_t1;
 
-DROP INDEX idx_t1 ON shidx_t1;
 DROP TABLE shidx_t1;

@@ -1,7 +1,3 @@
-PREHOOK: query: DROP INDEX idx_t1 ON shidx_t1
-PREHOOK: type: DROPINDEX
-POSTHOOK: query: DROP INDEX idx_t1 ON shidx_t1
-POSTHOOK: type: DROPINDEX
 PREHOOK: query: DROP TABLE shidx_t1
 PREHOOK: type: DROPTABLE
 POSTHOOK: query: DROP TABLE shidx_t1
@@ -174,13 +170,6 @@ idx_name            	tab_name            	col_name            	idx_tab_name     
 	 	 	 	 	 
 	 	 	 	 	 
 idx_t1              	shidx_t1            	key                 	default__shidx_t1_idx_t1__	compact             	
-PREHOOK: query: DROP INDEX idx_t1 ON shidx_t1
-PREHOOK: type: DROPINDEX
-POSTHOOK: query: DROP INDEX idx_t1 ON shidx_t1
-POSTHOOK: type: DROPINDEX
-POSTHOOK: Lineage: default__shidx_t1_idx_t1__._bucketname SIMPLE [(shidx_t1)shidx_t1.FieldSchema(name:INPUT__FILE__NAME, type:string, comment:), ]
-POSTHOOK: Lineage: default__shidx_t1_idx_t1__._offsets EXPRESSION [(shidx_t1)shidx_t1.FieldSchema(name:BLOCK__OFFSET__INSIDE__FILE, type:bigint, comment:), ]
-POSTHOOK: Lineage: default__shidx_t1_idx_t1__.key SIMPLE [(shidx_t1)shidx_t1.FieldSchema(name:key, type:string, comment:null), ]
 PREHOOK: query: DROP TABLE shidx_t1
 PREHOOK: type: DROPTABLE
 PREHOOK: Input: default@shidx_t1
