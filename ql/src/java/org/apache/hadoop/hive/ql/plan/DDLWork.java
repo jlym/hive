@@ -563,6 +563,10 @@ public class DDLWork implements Serializable {
     this.showPartsDesc = showPartsDesc;
   }
 
+  /**
+   * @return the showIndexesDesc
+   */
+  @Explain(displayName = "Show Index Operator")
   public ShowIndexesDesc getShowIndexesDesc() {
     return showIndexesDesc;
   }
