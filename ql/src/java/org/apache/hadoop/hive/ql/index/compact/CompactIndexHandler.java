@@ -125,7 +125,7 @@ public class CompactIndexHandler extends AbstractIndexHandler {
       PartitionDesc indexTblPartDesc, String indexTableName,
       PartitionDesc baseTablePartDesc, String baseTableName, String dbName) {
     
-    String indexCols = MetaStoreUtils.getUnparsedColumnNamesFromFieldSchema(indexField);
+    String indexCols = HiveUtils.getUnparsedColumnNamesFromFieldSchema(indexField);
 
     //form a new insert overwrite query.
     StringBuilder command= new StringBuilder();
