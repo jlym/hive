@@ -899,6 +899,12 @@ public class DDLSemanticAnalyzer extends BaseSemanticAnalyzer {
     ShowIndexesDesc showIndexesDesc;
     String tableName = unescapeIdentifier(ast.getChild(0).getText());
     showIndexesDesc = new ShowIndexesDesc(tableName, ctx.getResFile());
+
+    if (ast.getChildCount() == 2) {
+      int descOptions = ast.getChild(1).getType();
+      showIndexesDesc.setFormatted(descOptions == HiveParser.KW_FORMATTED);
+    }
+
     rootTasks.add(TaskFactory.get(new DDLWork(getInputs(), getOutputs(),
         showIndexesDesc), conf));
     setFetchTask(createFetchTask(showIndexesDesc.getSchema()));

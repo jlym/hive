@@ -672,8 +672,8 @@ showStatement
     -> ^(TOK_SHOW_TABLESTATUS showStmtIdentifier $db_name? partitionSpec?)
     | KW_SHOW KW_LOCKS -> ^(TOK_SHOWLOCKS)
     | KW_SHOW KW_LOCKS (parttype=partTypeExpr) -> ^(TOK_SHOWLOCKS $parttype)
-    | KW_SHOW (KW_INDEX|KW_INDEXES) KW_ON showStmtIdentifier ((KW_FROM|KW_IN) db_name=Identifier)?
-    -> ^(TOK_SHOWINDEXES showStmtIdentifier $db_name?)
+    | KW_SHOW (showOptions=KW_FORMATTED)? (KW_INDEX|KW_INDEXES) KW_ON showStmtIdentifier ((KW_FROM|KW_IN) db_name=Identifier)?
+    -> ^(TOK_SHOWINDEXES showStmtIdentifier $showOptions? $db_name?)
     ;
 
 lockStatement

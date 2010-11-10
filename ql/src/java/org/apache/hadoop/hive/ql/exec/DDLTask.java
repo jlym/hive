@@ -1109,11 +1109,6 @@ public class DDLTask extends Task<DDLWork> implements Serializable {
 
     tbl = db.getTable(tableName);
 
-    /*if (!tbl.isIndexed()) {
-      console.printError("Table " + tableName + " does not have any indexes");
-      return 1;
-    }*/
-
     indexes = db.getIndexes(db.getCurrentDatabase(), tbl.getTableName(), (short) -1);
 
     // write the results in the file
@@ -1122,11 +1117,12 @@ public class DDLTask extends Task<DDLWork> implements Serializable {
       FileSystem fs = resFile.getFileSystem(conf);
       DataOutput outStream = fs.create(resFile);
 
-      // column headers
-      outStream.writeBytes(MetaDataFormatUtils.getIndexColumnsHeader());
-
-      outStream.write(terminator);
-      outStream.write(terminator);
+      if (showIndexes.isFormatted()) {
+        // column headers
+        outStream.writeBytes(MetaDataFormatUtils.getIndexColumnsHeader());
+        outStream.write(terminator);
+        outStream.write(terminator);
+      }
 
       for (Index index : indexes)
       {

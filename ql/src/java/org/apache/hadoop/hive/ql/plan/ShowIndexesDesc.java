@@ -31,6 +31,7 @@ public class ShowIndexesDesc extends DDLDesc implements Serializable {
   private static final long serialVersionUID = 1L;
   String tableName;
   String resFile;
+  boolean isFormatted;
 
   /**
    * thrift ddl for the result of show indexes.
@@ -48,6 +49,14 @@ public class ShowIndexesDesc extends DDLDesc implements Serializable {
 
   public String getResFile() {
     return resFile;
+  }
+
+  public boolean isFormatted() {
+    return isFormatted;
+  }
+
+  public void setFormatted(boolean isFormatted) {
+    this.isFormatted = isFormatted;
   }
 
   /**
