@@ -351,9 +351,7 @@ public class DDLTask extends Task<DDLWork> implements Serializable {
       return 1;
     }
 
-    idx.getParameters().put("last_modified_by", user);
-    idx.getParameters().put("last_modified_time", Long.toString(System
-        .currentTimeMillis() / 1000));
+    updateModifiedParameters(idx.getParameters(), user);
 
     try {
       db.alterIndex(alterIndex.getBaseTableName(), alterIndex.getIndexName(), idx);
@@ -2139,9 +2137,7 @@ public class DDLTask extends Task<DDLWork> implements Serializable {
     }
 
     if(part == null) {
-      tbl.setProperty("last_modified_by", user);
-      tbl.setProperty("last_modified_time", Long.toString(System
-          .currentTimeMillis() / 1000));
+      updateModifiedParameters(tbl.getTTable().getParameters(), user);
       try {
         tbl.checkValidity();
       } catch (HiveException e) {
@@ -2150,9 +2146,7 @@ public class DDLTask extends Task<DDLWork> implements Serializable {
         return 1;
       }
     } else {
-      part.getParameters().put("last_modified_by", user);
-      part.getParameters().put("last_modified_time", Long.toString(System
-          .currentTimeMillis() / 1000));
+      updateModifiedParameters(part.getParameters(), user);
     }
 
     try {
@@ -2292,6 +2286,19 @@ public class DDLTask extends Task<DDLWork> implements Serializable {
     }
 
     return 0;
+  }
+
+  /**
+   * Update last_modified_by and last_modified_time parameters in parameter map.
+   *
+   * @param params
+   *          Parameters.
+   * @param user
+   *          user that is doing the updating.
+   */
+  private void updateModifiedParameters(Map<String, String> params, String user) {
+    params.put("last_modified_by", user);
+    params.put("last_modified_time", Long.toString(System.currentTimeMillis() / 1000));
   }
 
   /**
