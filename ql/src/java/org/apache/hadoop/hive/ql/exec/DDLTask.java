@@ -332,7 +332,10 @@ public class DDLTask extends Task<DDLWork> implements Serializable {
   }
 
   private int alterIndex(Hive db, AlterIndexDesc alterIndex) throws HiveException {
-    Index idx = db.getIndex(alterIndex.getBaseTableName(), alterIndex.getIndexName());
+    String dbName = alterIndex.getDbName();
+    String baseTableName = alterIndex.getBaseTableName();
+    String indexName = alterIndex.getIndexName();
+    Index idx = db.getIndex(dbName, baseTableName, indexName);
 
     if (alterIndex.getOp() == AlterIndexDesc.AlterIndexTypes.ADDPROPS) {
       idx.getParameters().putAll(alterIndex.getProps());
@@ -354,7 +357,7 @@ public class DDLTask extends Task<DDLWork> implements Serializable {
     updateModifiedParameters(idx.getParameters(), user);
 
     try {
-      db.alterIndex(alterIndex.getBaseTableName(), alterIndex.getIndexName(), idx);
+      db.alterIndex(dbName, baseTableName, indexName, idx);
     } catch (InvalidOperationException e) {
       console.printError("Invalid alter operation: " + e.getMessage());
       LOG.info("alter index: " + stringifyException(e));

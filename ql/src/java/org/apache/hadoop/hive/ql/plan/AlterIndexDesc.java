@@ -34,6 +34,10 @@ import org.apache.hadoop.hive.ql.exec.Utilities;
 @Explain(displayName = "Alter Index")
 public class AlterIndexDesc extends DDLDesc implements Serializable {
   private static final long serialVersionUID = 1L;
+  private String indexName;
+  private String baseTable;
+  private String dbName;
+  private HashMap<String, String> props;
 
   /**
    * alterIndexTypes.
@@ -43,9 +47,6 @@ public class AlterIndexDesc extends DDLDesc implements Serializable {
     ADDPROPS};
 
   AlterIndexTypes op;
-  String indexName;
-  String baseTable;
-  HashMap<String, String> props;
 
   public AlterIndexDesc() {
   }
@@ -84,6 +85,21 @@ public class AlterIndexDesc extends DDLDesc implements Serializable {
    */
   public void setBaseTableName(String baseTable) {
     this.baseTable = baseTable;
+  }
+
+  /**
+   * @return the name of the database that the base table is in
+   */
+  public String getDbName() {
+    return dbName;
+  }
+
+  /**
+   * @param dbName
+   *          the dbName to set
+   */
+  public void setDbName(String dbName) {
+    this.dbName = dbName;
   }
 
   /**

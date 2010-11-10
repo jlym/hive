@@ -355,10 +355,10 @@ public class Hive {
    *           if the changes in metadata is not acceptable
    * @throws TException
    */
-  public void alterIndex(String baseTblName, String idxName, Index newIdx)
+  public void alterIndex(String dbName, String baseTblName, String idxName, Index newIdx)
       throws InvalidOperationException, HiveException {
     try {
-      getMSC().alter_index(getCurrentDatabase(), baseTblName, idxName, newIdx);
+      getMSC().alter_index(dbName, baseTblName, idxName, newIdx);
     } catch (MetaException e) {
       throw new HiveException("Unable to alter index.", e);
     } catch (TException e) {

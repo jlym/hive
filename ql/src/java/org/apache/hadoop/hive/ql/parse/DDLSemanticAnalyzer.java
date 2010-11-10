@@ -428,6 +428,7 @@ public class DDLSemanticAnalyzer extends BaseSemanticAnalyzer {
     alterIdxDesc.setProps(mapProp);
     alterIdxDesc.setIndexName(indexName);
     alterIdxDesc.setBaseTableName(baseTableName);
+    alterIdxDesc.setDbName(db.getCurrentDatabase());
 
     rootTasks.add(TaskFactory.get(new DDLWork(alterIdxDesc), conf));
   }
