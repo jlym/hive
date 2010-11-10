@@ -577,8 +577,6 @@ public class MetaStoreUtils {
     return sb.toString();
   }
 
-  
-
   /**
    * Convert FieldSchemas to columnTypes.
    */
