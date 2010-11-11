@@ -944,8 +944,9 @@ public class DDLSemanticAnalyzer extends BaseSemanticAnalyzer {
   private void analyzeShowLocks(ASTNode ast) throws SemanticException {
     String tableName = null;
     HashMap<String, String> partSpec = null;
+    boolean isExtended = false;
 
-    if (ast.getChildCount() == 1) {
+    if (ast.getChildCount() >= 1) {
       // table for which show locks is being executed
       ASTNode tableTypeExpr = (ASTNode) ast.getChild(0);
       tableName = getFullyQualifiedName((ASTNode)tableTypeExpr.getChild(0));
@@ -955,10 +956,14 @@ public class DDLSemanticAnalyzer extends BaseSemanticAnalyzer {
         ASTNode partspec = (ASTNode) tableTypeExpr.getChild(1);
         partSpec = getPartSpec(partspec);
       }
+
+      if (ast.getChildCount() >= 2) {
+        isExtended = (ast.getChild(1).getType() == HiveParser.KW_EXTENDED);
+      }
     }
 
     ShowLocksDesc showLocksDesc = new ShowLocksDesc(ctx.getResFile(), tableName,
-                                                    partSpec);
+                                                    partSpec, isExtended);
     rootTasks.add(TaskFactory.get(new DDLWork(getInputs(), getOutputs(),
         showLocksDesc), conf));
     setFetchTask(createFetchTask(showLocksDesc.getSchema()));
@@ -989,7 +994,8 @@ public class DDLSemanticAnalyzer extends BaseSemanticAnalyzer {
       partSpec = partSpecs.get(0);
     }
 
-    LockTableDesc lockTblDesc = new LockTableDesc(tableName, mode, partSpec);
+    LockTableDesc lockTblDesc = new LockTableDesc(tableName, mode, partSpec,
+                                                  HiveConf.getVar(conf, ConfVars.HIVEQUERYID));
     rootTasks.add(TaskFactory.get(new DDLWork(getInputs(), getOutputs(),
                                               lockTblDesc), conf));
 
