@@ -123,7 +123,7 @@ POSTHOOK: type: SHOWINDEXES
 POSTHOOK: Lineage: default__show_idx_t1_idx_t1__._bucketname SIMPLE [(show_idx_t1)show_idx_t1.FieldSchema(name:INPUT__FILE__NAME, type:string, comment:), ]
 POSTHOOK: Lineage: default__show_idx_t1_idx_t1__._offsets EXPRESSION [(show_idx_t1)show_idx_t1.FieldSchema(name:BLOCK__OFFSET__INSIDE__FILE, type:bigint, comment:), ]
 POSTHOOK: Lineage: default__show_idx_t1_idx_t1__.key SIMPLE [(show_idx_t1)show_idx_t1.FieldSchema(name:key, type:string, comment:null), ]
-idx_name            	tab_name            	col_name            	idx_tab_name        	idx_type            	comment             
+idx_name            	tab_name            	col_names           	idx_tab_name        	idx_type            	comment             
 	 	 	 	 	 
 	 	 	 	 	 
 idx_t1              	show_idx_t1         	key                 	default__show_idx_t1_idx_t1__	compact             	
