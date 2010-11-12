@@ -87,24 +87,37 @@ public final class MetaDataFormatUtils {
   public static String getAllColumnsInformation(Index index) {
     StringBuilder indexInfo = new StringBuilder(DEFAULT_STRINGBUILDER_SIZE);
 
-    String[] indexColumns = new String[6];
+    List<String> indexColumns = new ArrayList<String>();
 
-    indexColumns[0] = index.getIndexName();
-    indexColumns[1] = index.getOrigTableName();
+    indexColumns.add(index.getIndexName());
+    indexColumns.add(index.getOrigTableName());
 
-    // add column name
-    indexColumns[2] = index.getSd().getCols().get(0).getName();
+    // index key names
+    List<FieldSchema> indexKeys = index.getSd().getCols();
+    StringBuilder keyString = new StringBuilder();
+    boolean first = true;
+    for (FieldSchema key : indexKeys)
+    {
+      if (!first)
+      {
+        keyString.append(", ");
+      }
+      keyString.append(key.getName());
+      first = false;
+    }
 
-    indexColumns[3] = index.getIndexTableName();
+    indexColumns.add(keyString.toString());
+
+    indexColumns.add(index.getIndexTableName());
 
     // index type
     String indexHandlerClass = index.getIndexHandlerClass();
     IndexType indexType = HiveIndex.getIndexTypeByClassName(indexHandlerClass);
-    indexColumns[4] = indexType.getName();
+    indexColumns.add(indexType.getName());
 
-    indexColumns[5] = index.getParameters().get("comment");
+    indexColumns.add(index.getParameters().get("comment"));
 
-    formatOutput(indexColumns, indexInfo);
+    formatOutput(indexColumns.toArray(new String[0]), indexInfo);
 
     return indexInfo.toString();
 }
