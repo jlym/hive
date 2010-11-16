@@ -55,6 +55,7 @@ public class DDLWork implements Serializable {
   private AlterTableSimpleDesc alterTblSimpleDesc;
   private MsckDesc msckDesc;
   private ShowTableStatusDesc showTblStatusDesc;
+  private ShowIndexesDesc showIndexesDesc;
 
   /**
    * ReadEntitites that are passed to the hooks.
@@ -80,7 +81,7 @@ public class DDLWork implements Serializable {
   public DDLWork(AlterIndexDesc alterIndex) {
     this.alterIndexDesc = alterIndex;
   }
-  
+
   /**
    * @param createDatabaseDesc
    *          Create Database descriptor
@@ -309,6 +310,12 @@ public class DDLWork implements Serializable {
       DropIndexDesc dropIndexDesc) {
     this(inputs, outputs);
     this.dropIdxDesc = dropIndexDesc;
+  }
+
+  public DDLWork(HashSet<ReadEntity> inputs, HashSet<WriteEntity> outputs,
+      ShowIndexesDesc showIndexesDesc) {
+    this(inputs, outputs);
+    this.showIndexesDesc = showIndexesDesc;
   }
 
   /**
@@ -595,6 +602,18 @@ public class DDLWork implements Serializable {
   }
 
   /**
+   * @return the showIndexesDesc
+   */
+  @Explain(displayName = "Show Index Operator")
+  public ShowIndexesDesc getShowIndexesDesc() {
+    return showIndexesDesc;
+  }
+
+  public void setShowIndexesDesc(ShowIndexesDesc showIndexesDesc) {
+    this.showIndexesDesc = showIndexesDesc;
+  }
+
+  /**
    * @return the descTblDesc
    */
   @Explain(displayName = "Describe Table Operator")
@@ -697,7 +716,7 @@ public class DDLWork implements Serializable {
   public void setOutputs(HashSet<WriteEntity> outputs) {
     this.outputs = outputs;
   }
-  
+
   public DropIndexDesc getDropIdxDesc() {
     return dropIdxDesc;
   }
