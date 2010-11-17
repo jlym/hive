@@ -352,7 +352,7 @@ public class DDLTask extends Task<DDLWork> implements Serializable {
     }
 
     // set last modified by properties
-    if (updateModifiedParameters(idx.getParameters(), conf)) {
+    if (!updateModifiedParameters(idx.getParameters(), conf)) {
       return 1;
     }
 
@@ -2189,7 +2189,7 @@ public class DDLTask extends Task<DDLWork> implements Serializable {
     }
 
     if(part == null) {
-      if (updateModifiedParameters(tbl.getTTable().getParameters(), conf)) {
+      if (!updateModifiedParameters(tbl.getTTable().getParameters(), conf)) {
         return 1;
       }
       try {
@@ -2200,7 +2200,7 @@ public class DDLTask extends Task<DDLWork> implements Serializable {
         return 1;
       }
     } else {
-      if (updateModifiedParameters(part.getParameters(), conf)) {
+      if (!updateModifiedParameters(part.getParameters(), conf)) {
         return 1;
       }
     }
@@ -2352,19 +2352,19 @@ public class DDLTask extends Task<DDLWork> implements Serializable {
    * @param user
    *          user that is doing the updating.
    */
-  private int updateModifiedParameters(Map<String, String> params, HiveConf conf) {
+  private boolean updateModifiedParameters(Map<String, String> params, HiveConf conf) {
     String user = null;
     try {
       user = conf.getUser();
     } catch (IOException e) {
       console.printError("Unable to get current user: " + e.getMessage(),
           stringifyException(e));
-      return 1;
+      return false;
     }
 
     params.put("last_modified_by", user);
     params.put("last_modified_time", Long.toString(System.currentTimeMillis() / 1000));
-    return 0;
+    return true;
   }
 
   /**
