@@ -352,16 +352,9 @@ public class DDLTask extends Task<DDLWork> implements Serializable {
     }
 
     // set last modified by properties
-    String user = null;
-    try {
-      user = conf.getUser();
-    } catch (IOException e) {
-      console.printError("Unable to get current user: " + e.getMessage(),
-          stringifyException(e));
+    if (updateModifiedParameters(idx.getParameters(), conf)) {
       return 1;
     }
-
-    updateModifiedParameters(idx.getParameters(), user);
 
     try {
       db.alterIndex(dbName, baseTableName, indexName, idx);
@@ -2195,18 +2188,10 @@ public class DDLTask extends Task<DDLWork> implements Serializable {
       return 1;
     }
 
-    // set last modified by properties
-    String user = null;
-    try {
-      user = conf.getUser();
-    } catch (IOException e) {
-      console.printError("Unable to get current user: " + e.getMessage(),
-          stringifyException(e));
-      return 1;
-    }
-
     if(part == null) {
-      updateModifiedParameters(tbl.getTTable().getParameters(), user);
+      if (updateModifiedParameters(tbl.getTTable().getParameters(), conf)) {
+        return 1;
+      }
       try {
         tbl.checkValidity();
       } catch (HiveException e) {
@@ -2215,7 +2200,9 @@ public class DDLTask extends Task<DDLWork> implements Serializable {
         return 1;
       }
     } else {
-      updateModifiedParameters(part.getParameters(), user);
+      if (updateModifiedParameters(part.getParameters(), conf)) {
+        return 1;
+      }
     }
 
     try {
@@ -2365,9 +2352,19 @@ public class DDLTask extends Task<DDLWork> implements Serializable {
    * @param user
    *          user that is doing the updating.
    */
-  private void updateModifiedParameters(Map<String, String> params, String user) {
+  private int updateModifiedParameters(Map<String, String> params, HiveConf conf) {
+    String user = null;
+    try {
+      user = conf.getUser();
+    } catch (IOException e) {
+      console.printError("Unable to get current user: " + e.getMessage(),
+          stringifyException(e));
+      return 1;
+    }
+
     params.put("last_modified_by", user);
     params.put("last_modified_time", Long.toString(System.currentTimeMillis() / 1000));
+    return 0;
   }
 
   /**
