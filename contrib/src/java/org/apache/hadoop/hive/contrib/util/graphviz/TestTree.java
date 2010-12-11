@@ -6,7 +6,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * TODO: fix the swithcing between using private members and the
+ * TODO: fix the switching between using private members and the
  * getter and setter functions
  * TestTree.
  *
