@@ -503,6 +503,7 @@ public class MapOperator extends Operator<MapredWork> implements Serializable {
           if (current != old.get()) {
             old.set(current);
           }
+        } else if (vc.equals(VirtualColumn.ROWOFFSET)) {
         }
       }
     }

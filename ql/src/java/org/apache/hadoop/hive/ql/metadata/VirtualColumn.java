@@ -32,10 +32,12 @@ public class VirtualColumn implements Serializable {
   
   public static VirtualColumn FILENAME = new VirtualColumn("INPUT__FILE__NAME", (PrimitiveTypeInfo)TypeInfoFactory.stringTypeInfo);
   public static VirtualColumn BLOCKOFFSET = new VirtualColumn("BLOCK__OFFSET__INSIDE__FILE", (PrimitiveTypeInfo)TypeInfoFactory.longTypeInfo);
+  public static VirtualColumn ROWOFFSET = new VirtualColumn("ROW__OFFSET__INSIDE__BLOCK", (PrimitiveTypeInfo)TypeInfoFactory.longTypeInfo);
   
   static {
     registry.put(FILENAME.name, FILENAME);
     registry.put(BLOCKOFFSET.name, BLOCKOFFSET);
+    registry.put(ROWOFFSET.name, ROWOFFSET);
   }
   
   private String name;
